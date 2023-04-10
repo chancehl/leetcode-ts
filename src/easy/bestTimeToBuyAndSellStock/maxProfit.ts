@@ -1,18 +1,18 @@
 function maxProfit(prices: number[]): number {
-	let i = 0;
-	let j = 1;
+	let slow = 0;
+	let fast = 1;
 	let max = 0;
 
-	while (j < prices.length) {
-		let currentPrice = prices[j] - prices[i]
+	while (fast < prices.length) {
+		let currentPrice = prices[fast] - prices[slow]
 
-		if (prices[i] < prices[j]) {
+		if (prices[slow] < prices[fast]) {
 			max = Math.max(currentPrice, max)
 		} else {
-			i = j;
+			slow = fast;
 		}
 
-		j++
+		fast++
 	}
 
 	return max;

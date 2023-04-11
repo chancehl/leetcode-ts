@@ -1,16 +1,22 @@
 function isPalindrome(s: string): boolean {
-    const str = s.toLowerCase().replace(/[^a-z0-9]/g, '')
+    let start = 0
+    let end = s.length - 1
 
-    let i = 0
-    let j = str.length - 1
+    while (start < end) {
+        let a = s[start].toLowerCase()
+        let b = s[end].toLowerCase()
 
-    while (i < j) {
-        if (str[i] !== str[j]) {
-            return false
+        if (!a.match(/[a-z0-9]/)) {
+            start++;
+        } else if (!b.match(/[a-z0-9]/)) {
+            end--;
         }
-
-        i++
-        j--
+        else if (a !== b) {
+            return false
+        } else {
+            start++;
+            end--;
+        }
     }
 
     return true

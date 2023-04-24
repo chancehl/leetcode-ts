@@ -1,6 +1,8 @@
 import { Queue } from '@common/queue'
 import { Stack } from '@common/stack'
 
+type Order = 'pre-order' | 'post-order' | 'in-order'
+
 class TreeNode {
 	val: number
 	left: TreeNode | null
@@ -14,15 +16,15 @@ class TreeNode {
 		this.right = right ?? null
 	}
 
-	traverse(traversal: 'bfs' | 'dfs'): number[] {
+	traverse(traversal: 'bfs' | 'dfs', order: Order = 'pre-order'): number[] {
 		if (traversal == 'bfs') {
-			return this.breadthFirstTraversal()
+			return this.breadthFirstTraversal(order)
 		} else {
-			return this.depthFirstTraversal()
+			return this.depthFirstTraversal(order)
 		}
 	}
 
-	private breadthFirstTraversal(): number[] {
+	private breadthFirstTraversal(_order: Order): number[] {
 		const queue = new Queue<TreeNode>([this])
 
 		let elements: number[] = []
@@ -52,7 +54,7 @@ class TreeNode {
 		return elements
 	}
 
-	private depthFirstTraversal(): number[] {
+	private depthFirstTraversal(_order: Order): number[] {
 		const stack = new Stack<TreeNode>([this])
 
 		let elements: number[] = []

@@ -9,11 +9,11 @@ class Stack<T> {
         this.values.push(value)
     }
 
-    pop() {
-        this.values.pop()
+    pop(): T | undefined {
+        return this.values.pop()
     }
 
-    peek() {
+    peek(): T {
         return this.values[this.values.length - 1]
     }
 }

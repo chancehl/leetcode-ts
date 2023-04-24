@@ -20,10 +20,6 @@ class Queue<T> {
 	toString(): string {
 		return this.elements.join(',')
 	}
-
-	getElements(): T[] {
-		return this.elements
-	}
 }
 
 export { Queue }

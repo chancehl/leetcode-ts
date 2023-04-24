@@ -1,11 +1,12 @@
 import { Queue } from '@common/queue'
+import { Stack } from '@common/stack'
 
 class TreeNode {
 	val: number
 	left: TreeNode | null
 	right: TreeNode | null
 
-	private visited: boolean = false; // note: this is exclusively used for traversal, searching
+	private visited: boolean = false // note: this is exclusively used for traversal, searching
 
 	constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
 		this.val = val ?? 0
@@ -22,28 +23,28 @@ class TreeNode {
 	}
 
 	private breadthFirstTraversal(): number[] {
-		const queue = new Queue<TreeNode>()
+		const queue = new Queue<TreeNode>([this])
 
 		let elements: number[] = []
 
-		// enqueue current
-		queue.enqueue(this)
-		elements.push(this.val)
+		let current: TreeNode | undefined;
 
 		while (queue.elements.length > 0) {
-			let current = queue.dequeue()
+			current = queue.dequeue()
+
+			if (current) {
+				elements.push(current.val)
+			}
 
 			// enqueue left
 			if (current && current.left && current.left.visited === false) {
 				queue.enqueue(current.left)
-				elements.push(current.left.val)
 				current.left.visited = true
 			}
 
 			// enqueue right
 			if (current && current.right && current.right.visited === false) {
 				queue.enqueue(current.right)
-				elements.push(current.right.val)
 				current.right.visited = true
 			}
 		}
@@ -52,7 +53,30 @@ class TreeNode {
 	}
 
 	private depthFirstTraversal(): number[] {
-		return []
+		const stack = new Stack<TreeNode>([this])
+
+		let elements: number[] = []
+
+		let current: TreeNode | undefined;
+
+		while (stack.elements.length) {
+			current = stack.pop()
+
+			if (current) {
+				elements.push(current.val)
+			}
+
+			if (current && current.right) {
+				stack.push(current.right)
+			}
+
+			if (current && current.left) {
+				stack.push(current.left)
+			}
+
+		}
+
+		return elements
 	}
 }
 

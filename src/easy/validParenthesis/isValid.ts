@@ -26,7 +26,7 @@ function isValid(s: string): boolean {
         }
     }
 
-    return stack.values.length === 0
+    return stack.elements.length === 0
 }
 
 export { isValid }

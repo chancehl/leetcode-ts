@@ -1,20 +1,24 @@
 class Stack<T> {
-    values: T[]
+    elements: T[]
 
     constructor(values: T[] = []) {
-        this.values = values
+        this.elements = values
     }
 
     push(value: T) {
-        this.values.push(value)
+        this.elements.push(value)
     }
 
     pop(): T | undefined {
-        return this.values.pop()
+        return this.elements.pop()
     }
 
     peek(): T {
-        return this.values[this.values.length - 1]
+        return this.elements[this.elements.length - 1]
+    }
+
+    toString(): string {
+        return this.elements.join(',')
     }
 }
 

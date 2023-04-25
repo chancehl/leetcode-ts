@@ -7,15 +7,14 @@ function isPalindrome(s: string): boolean {
         let b = s[end].toLowerCase()
 
         if (!a.match(/[a-z0-9]/)) {
-            start++;
+            start++
         } else if (!b.match(/[a-z0-9]/)) {
-            end--;
-        }
-        else if (a !== b) {
+            end--
+        } else if (a !== b) {
             return false
         } else {
-            start++;
-            end--;
+            start++
+            end--
         }
     }
 

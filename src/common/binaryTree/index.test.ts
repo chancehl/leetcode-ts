@@ -1,4 +1,4 @@
-import { TreeNode } from './index'
+import { TreeNode, maxDepth } from './index'
 
 describe('TreeNode', () => {
     describe('traversal', () => {
@@ -27,6 +27,26 @@ describe('TreeNode', () => {
                 const tree = new TreeNode(4, null, new TreeNode(7, new TreeNode(6), new TreeNode(9)))
 
                 expect(tree.traverse('dfs')).toEqual([4, 7, 6, 9])
+            })
+        })
+    })
+
+    describe('utilities', () => {
+        describe('maxDepth', () => {
+            test('imblanced tree', () => {
+                expect(maxDepth(new TreeNode(1, new TreeNode(2, new TreeNode(4), new TreeNode(5)), new TreeNode(3)))).toEqual(3)
+            })
+
+            test('balanced tree', () => {
+                expect(
+                    maxDepth(
+                        new TreeNode(
+                            4,
+                            new TreeNode(2, new TreeNode(1, new TreeNode(6), new TreeNode(8)), new TreeNode(3, new TreeNode(4), new TreeNode(2))),
+                            new TreeNode(7, new TreeNode(6, new TreeNode(5), new TreeNode(7)), new TreeNode(9, new TreeNode(1), new TreeNode(6))),
+                        ),
+                    ),
+                ).toEqual(4)
             })
         })
     })

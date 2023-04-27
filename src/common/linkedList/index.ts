@@ -23,18 +23,18 @@ class ListNode {
         return linkedList
     }
 
-    toString() {
-        let vals = []
+    toArray(): number[] {
+        let current: ListNode | null = this
 
-        let curr: ListNode | null = this
+        let elements = []
 
-        while (curr != null) {
-            vals.push(curr.val)
+        while (current != null) {
+            elements.push(current.val)
 
-            curr = curr.next
+            current = current.next
         }
 
-        return vals.join('->')
+        return elements
     }
 }
 

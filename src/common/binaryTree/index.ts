@@ -59,7 +59,7 @@ class TreeNode {
 
         let elements: number[] = []
 
-        let current: TreeNode | undefined
+        let current: TreeNode | null
 
         while (stack.elements.length) {
             current = stack.pop()

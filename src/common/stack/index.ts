@@ -9,12 +9,16 @@ class Stack<T> {
         this.elements.push(value)
     }
 
-    pop(): T | undefined {
-        return this.elements.pop()
+    pop(): T | null {
+        return this.elements.pop() ?? null
     }
 
     peek(): T {
         return this.elements[this.elements.length - 1]
+    }
+
+    size(): number {
+        return this.elements.length
     }
 
     toString(): string {

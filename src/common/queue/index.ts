@@ -6,7 +6,7 @@ class Queue<T> {
     }
 
     peek(): T {
-        return this.elements[this.elements.length - 1]
+        return this.elements[0]
     }
 
     enqueue(value: T): void {

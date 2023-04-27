@@ -5,7 +5,7 @@ describe('queue', () => {
         test('returns a value if the queue length >= 1', () => {
             const queue = new Queue([1, 2, 3, 4, 5])
 
-            expect(queue.peek()).toEqual(5)
+            expect(queue.peek()).toEqual(1)
         })
 
         test('returns undefined if the queue length === 0', () => {

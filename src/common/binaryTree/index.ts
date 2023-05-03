@@ -3,6 +3,11 @@ import { Stack } from '@common/stack'
 
 type Order = 'pre-order' | 'post-order' | 'in-order'
 
+type TraverseOptions = {
+    order?: Order
+    callback?: (node: TreeNode | null) => void
+}
+
 class TreeNode {
     val: number
     left: TreeNode | null
@@ -16,15 +21,15 @@ class TreeNode {
         this.right = right ?? null
     }
 
-    traverse(traversal: 'bfs' | 'dfs', order: Order = 'pre-order'): number[] {
+    traverse(traversal: 'bfs' | 'dfs', options?: TraverseOptions): number[] {
         if (traversal == 'bfs') {
-            return this.breadthFirstTraversal(order)
+            return this.breadthFirstTraversal(options)
         } else {
-            return this.depthFirstTraversal(order)
+            return this.depthFirstTraversal(options)
         }
     }
 
-    private breadthFirstTraversal(_order: Order): number[] {
+    private breadthFirstTraversal(options?: TraverseOptions): number[] {
         const queue = new Queue<TreeNode>([this])
 
         let elements: number[] = []
@@ -36,6 +41,11 @@ class TreeNode {
 
             if (current) {
                 elements.push(current.val)
+
+                // execute user callback if one was provided
+                if (options?.callback) {
+                    options.callback(current)
+                }
             }
 
             // enqueue left
@@ -54,7 +64,7 @@ class TreeNode {
         return elements
     }
 
-    private depthFirstTraversal(_order: Order): number[] {
+    private depthFirstTraversal(options?: TraverseOptions): number[] {
         const stack = new Stack<TreeNode>([this])
 
         let elements: number[] = []
@@ -66,6 +76,11 @@ class TreeNode {
 
             if (current) {
                 elements.push(current.val)
+
+                // execute user callback if one was provided
+                if (options?.callback) {
+                    options.callback(current)
+                }
             }
 
             if (current && current.right) {

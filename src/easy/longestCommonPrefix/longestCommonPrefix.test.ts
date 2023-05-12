@@ -14,6 +14,6 @@ describe('longestCommonPrefix', () => {
     })
 
     test('input 3', () => {
-        expect(longestCommonPrefix(['', 'b'])).toEqual('a')
+        expect(longestCommonPrefix(['', 'b'])).toEqual('')
     })
 })

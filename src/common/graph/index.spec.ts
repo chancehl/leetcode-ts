@@ -74,4 +74,21 @@ describe('graph', () => {
 
         expect(graph.simplify()).toEqual({ 2: [], 3: [], 4: [] })
     })
+
+    test('can create a graph object from a matrix', () => {
+        const graph = Graph.fromMatrix(
+            [
+                [0, 1],
+                [1, 1],
+            ],
+            'directed',
+        )
+
+        expect(graph.simplify()).toEqual({
+            '0,0': ['1,0', '0,1'],
+            '0,1': ['1,1', '0,0'],
+            '1,0': ['0,0', '1,1'],
+            '1,1': ['0,1', '1,0'],
+        })
+    })
 })

@@ -66,6 +66,36 @@ class Graph {
         return this.nodes.delete(value)
     }
 
+    static fromMatrix(m: NodeValueType[][], direction: Direction = 'undirected') {
+        let graph = new Graph(direction)
+
+        for (let i = 0; i < m.length; i++) {
+            for (let j = 0; j < m[0].length; j++) {
+                // up
+                if (i - 1 >= 0) {
+                    graph.addEdge(`${i},${j}`, `${i - 1},${j}`)
+                }
+
+                // down
+                if (i + 1 <= m.length - 1) {
+                    graph.addEdge(`${i},${j}`, `${i + 1},${j}`)
+                }
+
+                // left
+                if (j - 1 >= 0) {
+                    graph.addEdge(`${i},${j}`, `${i},${j - 1}`)
+                }
+
+                // right
+                if (j + 1 <= m[0].length - 1) {
+                    graph.addEdge(`${i},${j}`, `${i},${j + 1}`)
+                }
+            }
+        }
+
+        return graph
+    }
+
     bfs(root: GraphNode) {
         const visited = new Map()
         const queue = new Queue([root])
@@ -93,10 +123,10 @@ class Graph {
     }
 
     simplify() {
-        let simplifiedMap: Record<NodeValueType, NodeValueType[]> = {}
+        let simplifiedMap: Record<string | number, NodeValueType[]> = {}
 
         for (const key of this.nodes.keys()) {
-            simplifiedMap[key] = this.nodes.get(key)?.adjacents.map((node) => node.value) ?? []
+            simplifiedMap[key.toString()] = this.nodes.get(key)?.adjacents.map((node) => node.value) ?? []
         }
 
         return simplifiedMap

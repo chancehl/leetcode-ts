@@ -111,11 +111,11 @@ class Graph {
 
                 visited.set(current, true)
 
-                current.getAdjacents().forEach((adjacent) => {
+                for (const adjacent of current.getAdjacents()) {
                     if (!visited.has(adjacent)) {
                         queue.enqueue(adjacent)
                     }
-                })
+                }
             }
         }
 

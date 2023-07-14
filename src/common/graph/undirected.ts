@@ -60,4 +60,36 @@ export class UndirectedGraph {
 
         return str
     }
+
+    static fromMatrix(matrix: string[][]): UndirectedGraph {
+        let graph = new UndirectedGraph()
+
+        for (let i = 0; i < matrix.length; i++) {
+            for (let j = 0; j < matrix[0].length; j++) {
+                let key = matrix[i][j]
+
+                // up
+                if (i > 0) {
+                    graph.addEdge(key, matrix[i - 1][j])
+                }
+
+                // right
+                if (j < matrix[0].length - 1) {
+                    graph.addEdge(key, matrix[i][j + 1])
+                }
+
+                // down
+                if (i < matrix.length - 1) {
+                    graph.addEdge(key, matrix[i + 1][j])
+                }
+
+                // left
+                if (j > 0) {
+                    graph.addEdge(key, matrix[i][j - 1])
+                }
+            }
+        }
+
+        return graph
+    }
 }

@@ -1,8 +1,8 @@
-import { UndirectedGraph } from './undirected'
+import { DirectedGraph } from './directed'
 
-describe('undirected', () => {
+describe('directed', () => {
     test('can add a vertex', () => {
-        const graph = new UndirectedGraph()
+        const graph = new DirectedGraph()
 
         graph.addVertex('A')
 
@@ -11,7 +11,7 @@ describe('undirected', () => {
     })
 
     test('can add multiple vertices', () => {
-        const graph = new UndirectedGraph()
+        const graph = new DirectedGraph()
 
         graph.addVertex('A')
         graph.addVertex('B')
@@ -23,18 +23,18 @@ describe('undirected', () => {
     })
 
     test('can add an edge between two existing vertices', () => {
-        const graph = new UndirectedGraph()
+        const graph = new DirectedGraph()
 
         graph.addVertex('A')
         graph.addVertex('B')
         graph.addEdge('A', 'B')
 
         expect(graph.adjacencyList['A']).toEqual(new Set(['B']))
-        expect(graph.adjacencyList['B']).toEqual(new Set(['A']))
+        expect(graph.adjacencyList['B']).toEqual(new Set([]))
     })
 
     test('calling add edge will create the vertices first if they do not already exist', () => {
-        const graph = new UndirectedGraph()
+        const graph = new DirectedGraph()
 
         graph.addVertex('A')
         graph.addVertex('B')
@@ -46,11 +46,11 @@ describe('undirected', () => {
 
         expect(graph.adjacencyList['A']).toEqual(new Set(['C']))
         expect(graph.adjacencyList['C']).not.toBeUndefined()
-        expect(graph.adjacencyList['C']).toEqual(new Set(['A']))
+        expect(graph.adjacencyList['C']).toEqual(new Set([]))
     })
 
     test(`hasEdge returns true if the vertices both exist in the other's set`, () => {
-        const graph = new UndirectedGraph()
+        const graph = new DirectedGraph()
 
         graph.addVertex('A')
         graph.addVertex('B')
@@ -60,7 +60,7 @@ describe('undirected', () => {
     })
 
     test(`hasEdge returns false if the vertices do not exist in the other's set`, () => {
-        const graph = new UndirectedGraph()
+        const graph = new DirectedGraph()
 
         graph.addVertex('A')
         graph.addVertex('B')
@@ -69,7 +69,7 @@ describe('undirected', () => {
     })
 
     test(`hasEdge returns false if the vertex doesn't exist`, () => {
-        const graph = new UndirectedGraph()
+        const graph = new DirectedGraph()
 
         graph.addVertex('A')
         graph.addVertex('B')
@@ -78,7 +78,7 @@ describe('undirected', () => {
     })
 
     test('removeEdge can remove an existing edge', () => {
-        const graph = new UndirectedGraph()
+        const graph = new DirectedGraph()
 
         graph.addVertex('A')
         graph.addVertex('B')
@@ -92,7 +92,7 @@ describe('undirected', () => {
     })
 
     test('removeEdge does not modify the adjacencyList if the edge does not exist', () => {
-        const graph = new UndirectedGraph()
+        const graph = new DirectedGraph()
 
         graph.addVertex('A')
         graph.addVertex('B')
@@ -109,14 +109,14 @@ describe('undirected', () => {
     })
 
     test('removeVertex can remove a leaf node', () => {
-        const graph = new UndirectedGraph()
+        const graph = new DirectedGraph()
 
         graph.addEdge('A', 'B')
         graph.addEdge('A', 'C')
         graph.addEdge('A', 'D')
 
         expect(graph.adjacencyList['A']).toEqual(new Set(['B', 'C', 'D']))
-        expect(graph.adjacencyList['D']).toEqual(new Set(['A']))
+        expect(graph.adjacencyList['D']).toEqual(new Set([]))
 
         graph.removeVertex('D')
 
@@ -125,16 +125,16 @@ describe('undirected', () => {
     })
 
     test('removeVertex will remove edges between adjacent nodes before removing the element from the adjacency list', () => {
-        const graph = new UndirectedGraph()
+        const graph = new DirectedGraph()
 
         graph.addEdge('A', 'B')
         graph.addEdge('A', 'C')
         graph.addEdge('A', 'D')
 
         expect(graph.adjacencyList['A']).toEqual(new Set(['B', 'C', 'D']))
-        expect(graph.adjacencyList['B']).toEqual(new Set(['A']))
-        expect(graph.adjacencyList['C']).toEqual(new Set(['A']))
-        expect(graph.adjacencyList['D']).toEqual(new Set(['A']))
+        expect(graph.adjacencyList['B']).toEqual(new Set([]))
+        expect(graph.adjacencyList['C']).toEqual(new Set([]))
+        expect(graph.adjacencyList['D']).toEqual(new Set([]))
 
         graph.removeVertex('A')
 
@@ -145,7 +145,7 @@ describe('undirected', () => {
     })
 
     test('can construct a graph from a 2d array', () => {
-        const graph = UndirectedGraph.fromMatrix([
+        const graph = DirectedGraph.fromMatrix([
             ['A', 'B', 'C'],
             ['D', 'E', 'F'],
             ['G', 'H', 'I'],

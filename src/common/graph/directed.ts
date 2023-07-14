@@ -1,28 +1,52 @@
 export class DirectedGraph {
-    private adjacencyList: Record<string, Set<string>>
+    public adjacencyList: Record<string, Set<string>>
 
     constructor() {
         this.adjacencyList = {}
     }
 
     addVertex(vertex: string): void {
-        // TODO
+        if (!this.adjacencyList[vertex]) {
+            this.adjacencyList[vertex] = new Set()
+        }
     }
 
     addEdge(vertexA: string, vertexB: string): void {
-        // TODO
+        if (!this.adjacencyList[vertexA]) {
+            this.addVertex(vertexA)
+        }
+
+        if (!this.adjacencyList[vertexB]) {
+            this.addVertex(vertexB)
+        }
+
+        this.adjacencyList[vertexA].add(vertexB)
     }
 
     removeVertex(vertex: string): void {
-        // TODO
+        if (this.adjacencyList[vertex]) {
+            // remove adjacent vertices first
+            for (let key of Object.keys(this.adjacencyList)) {
+                if (this.hasEdge(key, vertex)) {
+                    this.removeEdge(key, vertex)
+                }
+            }
+
+            delete this.adjacencyList[vertex] // remove the key from the map
+        }
     }
 
     removeEdge(vertexA: string, vertexB: string): void {
-        // TODO
+        if (this.hasEdge(vertexA, vertexB)) {
+            this.adjacencyList[vertexA].delete(vertexB)
+        }
     }
 
     hasEdge(vertexA: string, vertexB: string): boolean {
-        // TODO
+        if (this.adjacencyList[vertexA] && this.adjacencyList[vertexB]) {
+            return this.adjacencyList[vertexA].has(vertexB)
+        }
+
         return false
     }
 
@@ -35,5 +59,37 @@ export class DirectedGraph {
         }
 
         return str
+    }
+
+    static fromMatrix(matrix: string[][]): DirectedGraph {
+        let graph = new DirectedGraph()
+
+        for (let i = 0; i < matrix.length; i++) {
+            for (let j = 0; j < matrix[0].length; j++) {
+                let key = matrix[i][j]
+
+                // up
+                if (i > 0) {
+                    graph.addEdge(key, matrix[i - 1][j])
+                }
+
+                // right
+                if (j < matrix[0].length - 1) {
+                    graph.addEdge(key, matrix[i][j + 1])
+                }
+
+                // down
+                if (i < matrix.length - 1) {
+                    graph.addEdge(key, matrix[i + 1][j])
+                }
+
+                // left
+                if (j > 0) {
+                    graph.addEdge(key, matrix[i][j - 1])
+                }
+            }
+        }
+
+        return graph
     }
 }

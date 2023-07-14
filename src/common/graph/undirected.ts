@@ -1,7 +1,10 @@
-export class UndirectedGraph {
+import { Graph } from './graph'
+
+export class UndirectedGraph extends Graph {
     public adjacencyList: Record<string, Set<string>>
 
     constructor() {
+        super()
         this.adjacencyList = {}
     }
 

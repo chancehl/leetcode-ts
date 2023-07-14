@@ -161,4 +161,29 @@ describe('undirected', () => {
         expect(graph.adjacencyList['H']).toEqual(new Set(['E', 'G', 'I']))
         expect(graph.adjacencyList['I']).toEqual(new Set(['F', 'H']))
     })
+
+    test('can traverse breadth-first', () => {
+        const graph = new UndirectedGraph()
+
+        graph.addEdge(0, 1)
+        graph.addEdge(0, 2)
+        graph.addEdge(1, 2)
+        graph.addEdge(1, 3)
+        graph.addEdge(2, 4)
+        graph.addEdge(3, 4)
+
+        expect(graph.breadthFirstTraversal(0)).toEqual([0, 1, 2, 3, 4])
+    })
+
+    test('can traverse depth-first', () => {
+        const graph = new UndirectedGraph()
+
+        graph.addEdge(0, 1)
+        graph.addEdge(0, 2)
+        graph.addEdge(0, 3)
+        graph.addEdge(2, 3)
+        graph.addEdge(2, 4)
+
+        expect(graph.depthFirstTraversal(0)).toEqual([0, 3, 2, 4, 1])
+    })
 })

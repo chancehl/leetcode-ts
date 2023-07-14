@@ -1,20 +1,20 @@
-import { Graph } from './graph'
+import { Graph, Vertex } from './graph'
 
 export class DirectedGraph extends Graph {
-    public adjacencyList: Record<string, Set<string>>
+    public adjacencyList: Record<Vertex, Set<Vertex>>
 
     constructor() {
         super()
         this.adjacencyList = {}
     }
 
-    addVertex(vertex: string): void {
+    addVertex(vertex: Vertex): void {
         if (!this.adjacencyList[vertex]) {
             this.adjacencyList[vertex] = new Set()
         }
     }
 
-    addEdge(vertexA: string, vertexB: string): void {
+    addEdge(vertexA: Vertex, vertexB: Vertex): void {
         if (!this.adjacencyList[vertexA]) {
             this.addVertex(vertexA)
         }
@@ -26,7 +26,7 @@ export class DirectedGraph extends Graph {
         this.adjacencyList[vertexA].add(vertexB)
     }
 
-    removeVertex(vertex: string): void {
+    removeVertex(vertex: Vertex): void {
         if (this.adjacencyList[vertex]) {
             // remove adjacent vertices first
             for (let key of Object.keys(this.adjacencyList)) {
@@ -39,13 +39,13 @@ export class DirectedGraph extends Graph {
         }
     }
 
-    removeEdge(vertexA: string, vertexB: string): void {
+    removeEdge(vertexA: Vertex, vertexB: Vertex): void {
         if (this.hasEdge(vertexA, vertexB)) {
             this.adjacencyList[vertexA].delete(vertexB)
         }
     }
 
-    hasEdge(vertexA: string, vertexB: string): boolean {
+    hasEdge(vertexA: Vertex, vertexB: Vertex): boolean {
         if (this.adjacencyList[vertexA] && this.adjacencyList[vertexB]) {
             return this.adjacencyList[vertexA].has(vertexB)
         }
@@ -64,7 +64,7 @@ export class DirectedGraph extends Graph {
         return str
     }
 
-    static fromMatrix(matrix: string[][]): DirectedGraph {
+    static fromMatrix(matrix: Vertex[][]): DirectedGraph {
         let graph = new DirectedGraph()
 
         for (let i = 0; i < matrix.length; i++) {

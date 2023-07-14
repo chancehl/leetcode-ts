@@ -1,20 +1,20 @@
-import { Graph } from './graph'
+import { Graph, Vertex } from './graph'
 
 export class UndirectedGraph extends Graph {
-    public adjacencyList: Record<string, Set<string>>
+    public adjacencyList: Record<Vertex, Set<Vertex>>
 
     constructor() {
         super()
         this.adjacencyList = {}
     }
 
-    addVertex(vertex: string): void {
+    addVertex(vertex: Vertex): void {
         if (!this.adjacencyList[vertex]) {
             this.adjacencyList[vertex] = new Set()
         }
     }
 
-    addEdge(vertexA: string, vertexB: string): void {
+    addEdge(vertexA: Vertex, vertexB: Vertex): void {
         if (!this.adjacencyList[vertexA]) {
             this.addVertex(vertexA)
         }
@@ -27,7 +27,7 @@ export class UndirectedGraph extends Graph {
         this.adjacencyList[vertexB].add(vertexA)
     }
 
-    removeVertex(vertex: string): void {
+    removeVertex(vertex: Vertex): void {
         if (this.adjacencyList[vertex]) {
             // remove adjacent vertices first
             for (let adjacentVertex of this.adjacencyList[vertex]) {
@@ -38,14 +38,14 @@ export class UndirectedGraph extends Graph {
         }
     }
 
-    removeEdge(vertexA: string, vertexB: string): void {
+    removeEdge(vertexA: Vertex, vertexB: Vertex): void {
         if (this.hasEdge(vertexA, vertexB)) {
             this.adjacencyList[vertexA].delete(vertexB)
             this.adjacencyList[vertexB].delete(vertexA)
         }
     }
 
-    hasEdge(vertexA: string, vertexB: string): boolean {
+    hasEdge(vertexA: Vertex, vertexB: Vertex): boolean {
         if (this.adjacencyList[vertexA] && this.adjacencyList[vertexB]) {
             return this.adjacencyList[vertexA].has(vertexB) && this.adjacencyList[vertexB].has(vertexA)
         }
@@ -64,7 +64,7 @@ export class UndirectedGraph extends Graph {
         return str
     }
 
-    static fromMatrix(matrix: string[][]): UndirectedGraph {
+    static fromMatrix(matrix: Vertex[][]): UndirectedGraph {
         let graph = new UndirectedGraph()
 
         for (let i = 0; i < matrix.length; i++) {

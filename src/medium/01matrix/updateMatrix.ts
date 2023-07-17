@@ -1,11 +1,5 @@
 import { Queue } from '@common/queue'
-
-function isValidCoordinatePair(row: number, col: number, matrix: any[][]): boolean {
-    let validRow = 0 <= row && row < matrix.length
-    let validCol = 0 <= col && col < matrix[0].length
-
-    return validRow && validCol
-}
+import { isValidCoordinatePair } from '@common/utils'
 
 export function updateMatrix(mat: number[][]): number[][] {
     let seen = [...Array(mat.length)].map((_) => Array(mat[0].length).fill(false))
@@ -39,7 +33,7 @@ export function updateMatrix(mat: number[][]): number[][] {
                 const newRow = direction[0] + row
                 const newCol = direction[1] + col
 
-                if (isValidCoordinatePair(newRow, newCol, mat) && !seen[newRow][newCol]) {
+                if (isValidCoordinatePair([newRow, newCol], mat) && !seen[newRow][newCol]) {
                     seen[newRow][newCol] = true
                     queue.enqueue({ row: newRow, col: newCol, steps: steps + 1 })
                     mat[newRow][newCol] = steps + 1

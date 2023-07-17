@@ -1,4 +1,4 @@
-import { createEmptyMatrix } from './index'
+import { createEmptyMatrix, isValidCoordinatePair } from './index'
 
 describe('createEmptyMatrix', () => {
     test('can create a N x N matrix', () => {
@@ -29,5 +29,27 @@ describe('createEmptyMatrix', () => {
             [-Infinity, -Infinity],
             [-Infinity, -Infinity],
         ])
+    })
+})
+
+describe('isValidCoordinatePair', () => {
+    test('can handle an empty array', () => {
+        expect(isValidCoordinatePair([1, 1], [[]])).toEqual(false)
+    })
+
+    test('can handle out of bounds indices', () => {
+        expect(isValidCoordinatePair([-1, 1], [[], []])).toEqual(false)
+    })
+
+    test('can handle in bounds indices', () => {
+        expect(
+            isValidCoordinatePair(
+                [1, 1],
+                [
+                    ['a', 'b'],
+                    ['c', 'd'],
+                ],
+            ),
+        ).toEqual(true)
     })
 })

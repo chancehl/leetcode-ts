@@ -1,4 +1,4 @@
-import { euclidianDistance } from './'
+import { euclidianDistance } from '.'
 
 describe('euclidianDistance', () => {
     test('input 1', () => {

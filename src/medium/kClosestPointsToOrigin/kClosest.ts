@@ -9,7 +9,7 @@ function kClosest(points: number[][], k: number): number[][] {
     for (const [x, y] of points) {
         let distance = euclidianDistance([x, y], [0, 0])
 
-        priorityQueue.enqueue([x, y], distance > 0 ? -distance : distance) // this is technically a max queue using a max heap so invert the values if you want them in reverse order
+        priorityQueue.enqueue([x, y], distance * -1) // this is technically a max queue using a max heap so invert the values if you want them in reverse order
     }
 
     while (k > 0) {

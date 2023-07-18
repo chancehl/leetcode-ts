@@ -9,7 +9,7 @@ export class MinHeap extends Heap {
         throw new Error('Method not implemented.')
     }
 
-    remove(): void {
+    remove(): number | null {
         throw new Error('Method not implemented.')
     }
 

@@ -5,11 +5,9 @@ export abstract class Heap {
         this.items = []
     }
 
-    abstract insert(n: number): void
+    abstract add(n: number): void
 
-    abstract delete(): void
-
-    abstract heapify(arr: number[]): void
+    abstract remove(): void
 
     getLeftChildIndex(index: number): number {
         return 2 * index + 1

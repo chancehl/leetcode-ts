@@ -5,15 +5,11 @@ export class MinHeap extends Heap {
         super()
     }
 
-    heapify(arr: number[]): void {
+    add(n: number): void {
         throw new Error('Method not implemented.')
     }
 
-    insert(n: number): void {
-        throw new Error('Method not implemented.')
-    }
-
-    delete(): void {
+    remove(): void {
         throw new Error('Method not implemented.')
     }
 

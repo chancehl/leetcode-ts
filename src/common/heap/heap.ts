@@ -7,7 +7,7 @@ export abstract class Heap {
 
     abstract add(n: number): void
 
-    abstract remove(): void
+    abstract remove(): number | null
 
     getLeftChildIndex(index: number): number {
         return 2 * index + 1

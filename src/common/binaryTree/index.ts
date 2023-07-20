@@ -94,6 +94,42 @@ class TreeNode {
 
         return elements
     }
+
+    private levelOrderTraversal(): number[][] {
+        let values: number[][] = []
+
+        let queue = new Queue<TreeNode>([this])
+
+        let level = 0
+
+        while (queue.elements.length > 0) {
+            values.push([])
+
+            let count = queue.elements.length
+
+            while (count > 0) {
+                const current = queue.dequeue()
+
+                if (current != null) {
+                    values[level].push(current.val)
+
+                    if (current.left) {
+                        queue.enqueue(current.left)
+                    }
+
+                    if (current.right) {
+                        queue.enqueue(current.right)
+                    }
+                }
+
+                count--
+            }
+
+            level++
+        }
+
+        return values
+    }
 }
 
 function maxDepth(node: TreeNode | null): number {

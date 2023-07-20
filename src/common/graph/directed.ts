@@ -1,3 +1,4 @@
+import { Stack } from '../stack'
 import { Graph, Vertex } from './graph'
 
 export class DirectedGraph extends Graph {
@@ -94,5 +95,41 @@ export class DirectedGraph extends Graph {
         }
 
         return graph
+    }
+
+    topologicalSort(): Vertex[] {
+        let values = []
+
+        let stack = new Stack<Vertex>()
+
+        let visisted = new Set<Vertex>()
+
+        for (const vertex of this.getVertices()) {
+            if (!visisted.has(vertex)) {
+                this.topologicallyVisitNode(vertex, visisted, stack)
+            }
+        }
+
+        while (stack.elements.length > 0) {
+            let value = stack.pop()
+
+            if (value != null) {
+                values.push(value)
+            }
+        }
+
+        return values
+    }
+
+    private topologicallyVisitNode(vertex: Vertex, visited: Set<Vertex>, stack: Stack<Vertex> = new Stack()): void {
+        visited.add(vertex)
+
+        for (const adjacent of this.adjacencyList[vertex]) {
+            if (!visited.has(adjacent)) {
+                this.topologicallyVisitNode(adjacent, visited, stack)
+            }
+        }
+
+        stack.push(vertex)
     }
 }

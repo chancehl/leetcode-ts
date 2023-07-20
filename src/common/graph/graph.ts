@@ -84,4 +84,12 @@ export abstract class Graph {
 
         return elements
     }
+
+    size(): number {
+        return Object.keys(this.adjacencyList).length
+    }
+
+    getVertices(): Vertex[] {
+        return [...Object.keys(this.adjacencyList).map((key) => (/\d+/.test(key) ? Number.parseInt(key) : key))]
+    }
 }

@@ -186,4 +186,24 @@ describe('directed', () => {
 
         expect(graph.depthFirstTraversal(0)).toEqual([0, 3, 2, 4, 1])
     })
+
+    test('can topologically sort an acylic graph', () => {
+        const graph = new DirectedGraph()
+
+        graph.addVertex(0)
+        graph.addVertex(1)
+        graph.addVertex(2)
+        graph.addVertex(3)
+        graph.addVertex(4)
+        graph.addVertex(5)
+
+        graph.addEdge(2, 3)
+        graph.addEdge(3, 1)
+        graph.addEdge(4, 0)
+        graph.addEdge(4, 1)
+        graph.addEdge(5, 2)
+        graph.addEdge(5, 0)
+
+        expect(graph.topologicalSort()).toEqual([5, 4, 2, 3, 1, 0])
+    })
 })

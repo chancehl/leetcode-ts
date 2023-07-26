@@ -97,39 +97,63 @@ export class DirectedGraph extends Graph {
         return graph
     }
 
-    topologicalSort(): Vertex[] {
-        let values = []
+    private calculateIndegrees(): Record<Vertex, number> {
+        let indegrees: Record<Vertex, number> = {}
 
-        let stack = new Stack<Vertex>()
+        for (const vertex of Object.keys(this.adjacencyList)) {
+            indegrees[vertex] = 0
+        }
 
-        let visisted = new Set<Vertex>()
+        for (const vertex of Object.keys(this.adjacencyList)) {
+            const adjacents = this.adjacencyList[vertex]
 
-        for (const vertex of this.getVertices()) {
-            if (!visisted.has(vertex)) {
-                this.topologicallyVisitNode(vertex, visisted, stack)
+            for (const adjacent of adjacents) {
+                indegrees[adjacent] += 1
             }
         }
 
-        while (stack.elements.length > 0) {
-            let value = stack.pop()
-
-            if (value != null) {
-                values.push(value)
-            }
-        }
-
-        return values
+        return indegrees
     }
 
-    private topologicallyVisitNode(vertex: Vertex, visited: Set<Vertex>, stack: Stack<Vertex> = new Stack()): void {
-        visited.add(vertex)
+    topologicalSort(): Vertex[] {
+        // construct a mapping of vertices to their indegrees
+        const indegrees = this.calculateIndegrees()
 
-        for (const adjacent of this.adjacencyList[vertex]) {
-            if (!visited.has(adjacent)) {
-                this.topologicallyVisitNode(adjacent, visited, stack)
+        // track vertices with no incoming edges
+        let verticesWithNoIncomingEdges: Vertex[] = []
+
+        for (const vertex of this.getVertices()) {
+            if (indegrees[vertex] === 0) {
+                verticesWithNoIncomingEdges.push(vertex)
             }
         }
 
-        stack.push(vertex)
+        // initially we we have no vertices in our sort
+        let topologicallySortedVertices = []
+
+        // as long as we have vertices with no incoming edges, continue
+        while (verticesWithNoIncomingEdges.length > 0) {
+            let vertex = verticesWithNoIncomingEdges.pop()
+
+            if (vertex !== undefined) {
+                // push this vertex onto our return array since we're certain there are no incoming edges
+                topologicallySortedVertices.push(vertex)
+
+                // decrement the indegree of that node's neighbors
+                for (const adjacentVertex of this.adjacencyList[vertex]) {
+                    indegrees[adjacentVertex] -= 1
+
+                    if (indegrees[adjacentVertex] === 0) {
+                        verticesWithNoIncomingEdges.push(adjacentVertex)
+                    }
+                }
+            }
+        }
+
+        if (topologicallySortedVertices.length !== this.size()) {
+            throw new Error('Detected cycle in directed graph. No topological ordering exists.')
+        }
+
+        return topologicallySortedVertices
     }
 }

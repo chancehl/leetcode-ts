@@ -1,4 +1,3 @@
-import { Stack } from '../stack'
 import { Graph, Vertex } from './graph'
 
 export class DirectedGraph extends Graph {
@@ -139,7 +138,7 @@ export class DirectedGraph extends Graph {
         return graph
     }
 
-    private calculateIndegrees(): Record<Vertex, number> {
+    calculateIndegrees(): Record<Vertex, number> {
         let indegrees: Record<Vertex, number> = {}
 
         for (const vertex of Object.keys(this.adjacencyList)) {

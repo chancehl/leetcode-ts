@@ -187,23 +187,42 @@ describe('directed', () => {
         expect(graph.depthFirstTraversal(0)).toEqual([0, 3, 2, 4, 1])
     })
 
-    test('can topologically sort an acylic graph', () => {
+    test('can topologically sort an acylic graph of numbers', () => {
         const graph = new DirectedGraph()
 
-        graph.addVertex(0)
-        graph.addVertex(1)
-        graph.addVertex(2)
-        graph.addVertex(3)
-        graph.addVertex(4)
-        graph.addVertex(5)
+        graph.addEdge(1, 3)
+        graph.addEdge(1, 2)
+        graph.addEdge(2, 4)
+        graph.addEdge(2, 5)
+        graph.addEdge(3, 4)
+        graph.addEdge(4, 5)
 
-        graph.addEdge(2, 3)
-        graph.addEdge(3, 1)
-        graph.addEdge(4, 0)
-        graph.addEdge(4, 1)
-        graph.addEdge(5, 2)
-        graph.addEdge(5, 0)
+        expect(graph.topologicalSort()).toEqual([1, 2, 3, 4, 5])
+    })
 
-        expect(graph.topologicalSort()).toEqual([5, 4, 2, 3, 1, 0])
+    test('can topologically sort an acylic graph of chars', () => {
+        const graph = new DirectedGraph()
+
+        graph.addEdge('b', 'e')
+        graph.addEdge('b', 'c')
+        graph.addEdge('e', 'a')
+        graph.addEdge('e', 'c')
+        graph.addEdge('a', 'c')
+        graph.addEdge('a', 'd')
+        graph.addEdge('c', 'd')
+
+        expect(graph.topologicalSort()).toEqual(['b', 'e', 'a', 'c', 'd'])
+    })
+
+    test('can detect cycles when topologically sorting graph', () => {
+        const graph = new DirectedGraph()
+
+        graph.addEdge('a', 'b')
+        graph.addEdge('a', 'c')
+        graph.addEdge('c', 'd')
+        graph.addEdge('d', 'b')
+        graph.addEdge('b', 'c') // this closes the loop of b -> c -> d -> b -> ...
+
+        expect(() => graph.topologicalSort()).toThrowError('Detected cycle')
     })
 })

@@ -65,6 +65,48 @@ export class DirectedGraph extends Graph {
         return str
     }
 
+    topologicalSort(): Vertex[] {
+        // construct a mapping of vertices to their indegrees
+        const indegrees = this.calculateIndegrees()
+
+        // track vertices with no incoming edges
+        let verticesWithNoIncomingEdges: Vertex[] = []
+
+        for (const vertex of this.getVertices()) {
+            if (indegrees[vertex] === 0) {
+                verticesWithNoIncomingEdges.push(vertex)
+            }
+        }
+
+        // initially we we have no vertices in our sort
+        let topologicallySortedVertices = []
+
+        // as long as we have vertices with no incoming edges, continue
+        while (verticesWithNoIncomingEdges.length > 0) {
+            let vertex = verticesWithNoIncomingEdges.pop()
+
+            if (vertex !== undefined) {
+                // push this vertex onto our return array since we're certain there are no incoming edges
+                topologicallySortedVertices.push(vertex)
+
+                // decrement the indegree of that node's neighbors
+                for (const adjacentVertex of this.adjacencyList[vertex]) {
+                    indegrees[adjacentVertex] -= 1
+
+                    if (indegrees[adjacentVertex] === 0) {
+                        verticesWithNoIncomingEdges.push(adjacentVertex)
+                    }
+                }
+            }
+        }
+
+        if (topologicallySortedVertices.length !== this.size()) {
+            throw new Error('Detected cycle in directed graph. No topological ordering exists.')
+        }
+
+        return topologicallySortedVertices
+    }
+
     static fromMatrix(matrix: Vertex[][]): DirectedGraph {
         let graph = new DirectedGraph()
 
@@ -113,47 +155,5 @@ export class DirectedGraph extends Graph {
         }
 
         return indegrees
-    }
-
-    topologicalSort(): Vertex[] {
-        // construct a mapping of vertices to their indegrees
-        const indegrees = this.calculateIndegrees()
-
-        // track vertices with no incoming edges
-        let verticesWithNoIncomingEdges: Vertex[] = []
-
-        for (const vertex of this.getVertices()) {
-            if (indegrees[vertex] === 0) {
-                verticesWithNoIncomingEdges.push(vertex)
-            }
-        }
-
-        // initially we we have no vertices in our sort
-        let topologicallySortedVertices = []
-
-        // as long as we have vertices with no incoming edges, continue
-        while (verticesWithNoIncomingEdges.length > 0) {
-            let vertex = verticesWithNoIncomingEdges.pop()
-
-            if (vertex !== undefined) {
-                // push this vertex onto our return array since we're certain there are no incoming edges
-                topologicallySortedVertices.push(vertex)
-
-                // decrement the indegree of that node's neighbors
-                for (const adjacentVertex of this.adjacencyList[vertex]) {
-                    indegrees[adjacentVertex] -= 1
-
-                    if (indegrees[adjacentVertex] === 0) {
-                        verticesWithNoIncomingEdges.push(adjacentVertex)
-                    }
-                }
-            }
-        }
-
-        if (topologicallySortedVertices.length !== this.size()) {
-            throw new Error('Detected cycle in directed graph. No topological ordering exists.')
-        }
-
-        return topologicallySortedVertices
     }
 }

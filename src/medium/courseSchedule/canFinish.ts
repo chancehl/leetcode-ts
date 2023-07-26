@@ -1,5 +1,7 @@
 import { DirectedGraph } from '@common/graph'
 
+// note: this problem description on leetcode kinda sucks. you don't really even need to look at "numCourses".
+// see https://leetcode.com/problems/course-schedule
 function canFinish(numCourses: number, prerequisites: number[][]): boolean {
     const graph = new DirectedGraph()
 

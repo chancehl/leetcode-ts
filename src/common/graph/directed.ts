@@ -29,7 +29,7 @@ export class DirectedGraph extends Graph {
     removeVertex(vertex: Vertex): void {
         if (this.adjacencyList[vertex]) {
             // remove adjacent vertices first
-            for (let key of Object.keys(this.adjacencyList)) {
+            for (let key of this.getVertices()) {
                 if (this.hasEdge(key, vertex)) {
                     this.removeEdge(key, vertex)
                 }
@@ -106,6 +106,26 @@ export class DirectedGraph extends Graph {
         return topologicallySortedVertices
     }
 
+    calculateIndegrees(): Record<Vertex, number> {
+        let indegrees: Record<Vertex, number> = {}
+
+        const vertices = this.getVertices()
+
+        for (const vertex of vertices) {
+            indegrees[vertex] = 0
+        }
+
+        for (const vertex of vertices) {
+            const adjacents = this.adjacencyList[vertex]
+
+            for (const adjacent of adjacents) {
+                indegrees[adjacent] += 1
+            }
+        }
+
+        return indegrees
+    }
+
     static fromMatrix(matrix: Vertex[][]): DirectedGraph {
         let graph = new DirectedGraph()
 
@@ -136,23 +156,5 @@ export class DirectedGraph extends Graph {
         }
 
         return graph
-    }
-
-    calculateIndegrees(): Record<Vertex, number> {
-        let indegrees: Record<Vertex, number> = {}
-
-        for (const vertex of Object.keys(this.adjacencyList)) {
-            indegrees[vertex] = 0
-        }
-
-        for (const vertex of Object.keys(this.adjacencyList)) {
-            const adjacents = this.adjacencyList[vertex]
-
-            for (const adjacent of adjacents) {
-                indegrees[adjacent] += 1
-            }
-        }
-
-        return indegrees
     }
 }

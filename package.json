@@ -3,8 +3,7 @@
     "version": "1.0.0",
     "description": "clinz.dev@gmail.com leetcode solutions",
     "scripts": {
-        "test": "jest",
-        "build": "tsc",
+        "test": "bun test",
         "format": "prettier --write **/*",
         "prepare": "husky install"
     },

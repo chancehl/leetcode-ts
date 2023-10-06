@@ -1,3 +1,5 @@
+import { describe, test, expect } from 'bun:test'
+
 import { MaxHeap } from './maxHeap'
 
 describe('max heap', () => {

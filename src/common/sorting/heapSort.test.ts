@@ -1,3 +1,5 @@
+import { describe, test, expect } from 'bun:test'
+
 import { heapSort } from './heapSort'
 
 describe('heap sort', () => {

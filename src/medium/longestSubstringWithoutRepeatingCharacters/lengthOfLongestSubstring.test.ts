@@ -1,3 +1,5 @@
+import { describe, test, expect } from 'bun:test'
+
 import { lengthOfLongestSubstring } from './lengthOfLongestSubstring'
 
 describe('lengthOfLongestSubstring', () => {

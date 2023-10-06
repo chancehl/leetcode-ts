@@ -1,3 +1,5 @@
+import { describe, test, expect } from 'bun:test'
+
 import { ListNode } from '@common/linkedList'
 import { hasCycle } from './hasCycle'
 

@@ -1,3 +1,5 @@
+import { describe, test, expect } from 'bun:test'
+
 import { canFinish } from './canFinish'
 
 describe('canFinish', () => {

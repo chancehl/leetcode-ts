@@ -1,4 +1,6 @@
-import { euclidianDistance } from '.'
+import { describe, test, expect } from 'bun:test'
+
+import { euclidianDistance } from './index'
 
 describe('euclidianDistance', () => {
     test('input 1', () => {

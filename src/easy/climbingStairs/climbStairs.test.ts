@@ -1,3 +1,5 @@
+import { describe, test, expect } from 'bun:test'
+
 import { climbStairs } from './climbStairs'
 
 describe('climbStairs', () => {

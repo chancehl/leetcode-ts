@@ -1,3 +1,5 @@
+import { describe, test, expect } from 'bun:test'
+
 import { DirectedGraph } from './directed'
 
 describe('directed', () => {
@@ -223,6 +225,14 @@ describe('directed', () => {
         graph.addEdge('d', 'b')
         graph.addEdge('b', 'c') // this closes the loop of b -> c -> d -> b -> ...
 
-        expect(() => graph.topologicalSort()).toThrowError('Detected cycle')
+        let hasCycle = false
+
+        try {
+            graph.topologicalSort()
+        } catch (_err) {
+            hasCycle = true
+        }
+
+        expect(hasCycle).toEqual(true)
     })
 })

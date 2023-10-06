@@ -1,6 +1,6 @@
-import { DirectedGraph } from './directed'
+import { describe, test, expect } from 'bun:test'
 
-import { Graph } from './graph'
+import { DirectedGraph } from './directed'
 
 // note: graph is abstract, so it can't be instantiated. we have to use either directed/undirected graph class instead.
 describe('graph', () => {

@@ -3,23 +3,23 @@ import { describe, test, expect } from 'bun:test'
 import { isValid } from './isValid'
 
 describe('isValid', () => {
-    test('TEST_CASE_1', () => {
+    test('input 1', () => {
         expect(isValid('()')).toEqual(true)
     })
 
-    test('TEST_CASE_2', () => {
+    test('input 2', () => {
         expect(isValid('()[]{}')).toEqual(true)
     })
 
-    test('TEST_CASE_3', () => {
+    test('input 3', () => {
         expect(isValid('(]')).toEqual(false)
     })
 
-    test('TEST_CASE_4', () => {
+    test('input 4', () => {
         expect(isValid('(([[{}]]))')).toEqual(true)
     })
 
-    test('TEST_CASE_5', () => {
+    test('input 5', () => {
         expect(isValid('(([}]]))')).toEqual(false)
     })
 })
